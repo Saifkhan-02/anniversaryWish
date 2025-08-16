@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Wish</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css"
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #ff4e91, #ff9a9e, #fad0c4);
+            background-size: 300% 300%;
+            animation: bgMove 8s ease infinite;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes bgMove {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Emoji Animation */
+        .emoji {
+            position: absolute;
+            font-size: 2rem;
+            animation: floatUp 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(255,255,255,0.8));
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            50% { transform: translateY(-20px) scale(1.1); }
+            100% { transform: translateY(0) scale(1); opacity: 1; }
+        }
+
+        /* Button Glassmorphism */
+        .btn {
+            backdrop-filter: blur(10px);
+            background: rgba(255, 255, 255, 0.15);
+            border: 2px solid rgba(255, 255, 255, 0.4);
+            border-radius: 25px;
+            padding: 18px 40px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            transition: all 0.4s ease;
+            box-shadow: 0 0 20px rgba(255, 182, 193, 0.6);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(255, 105, 180, 0.8);
+        }
+
+        /* Text Glow */
+        .main-text {
+            text-shadow: 0 0 10px #fff, 0 0 20px #ff80aa, 0 0 40px #ff4e91;
+            animation: glow 2s infinite alternate;
+        }
+
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #ff80aa; }
+            to { text-shadow: 0 0 20px #fff, 0 0 40px #ff4e91; }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Floating Emojis -->
+    <span class="emoji" style="top:10%; left:8%;">&#128152;</span>
+    <span class="emoji" style="top:20%; left:35%;">&#128525;</span>
+    <span class="emoji" style="top:30%; left:70%;">&#11088;</span>
+    <span class="emoji" style="top:60%; left:15%;">&#128640;</span>
+    <span class="emoji" style="top:75%; left:80%;">&#128150;</span>
+    <span class="emoji" style="top:50%; left:50%;">&#129505;</span>
+    <span class="emoji" style="top:85%; left:40%;">&#128151;</span>
+
+    <!-- Center Content -->
+    <div class="flex flex-col justify-center items-center h-screen text-center px-4">
+        <h1 class="text-white text-4xl sm:text-6xl font-bold main-text mb-6">🎉 Hey Beautiful! 🎉</h1>
+        <button class="btn">
+            <a href="something.html">
+                &#129303; I have something for you... &#10024; 💖
+            </a>
+        </button>
+    </div>
+
+</body>
+
+</html>

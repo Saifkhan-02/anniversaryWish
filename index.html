@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Anniversary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&family=Great+Vibes&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --bg1: #0f0c29;
+      --bg2: #302b63;
+      --bg3: #24243e;
+    }
+
+    html, body { 
+      height: 100%; 
+    }
+    body {
+      font-family: 'Poppins', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 70% 0%, #3d2f64 0%, #1b1636 100%) fixed,
+                  linear-gradient(120deg, var(--bg1), var(--bg2), var(--bg3)) fixed;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* --- Floating Petals Background (pure CSS + a little JS to spawn) --- */
+    .petal { 
+      position: fixed; 
+      top: -10vh; 
+      pointer-events: none; 
+      z-index: 1; 
+    }
+    .petal svg { 
+      width: var(--size); 
+      height: var(--size); 
+      opacity: .9; 
+      filter: drop-shadow(0 4px 12px rgba(255, 105, 180, .35)); 
+    }
+    @keyframes fall {
+      0%   { transform: translate3d(var(--x,0), -10vh, 0) rotate(0deg); opacity: 0; }
+      10%  { opacity: .85; }
+      100% { transform: translate3d(calc(var(--x,0) + var(--drift, 0)), 105vh, 0) rotate(360deg); opacity: 0; }
+    }
+
+    /* --- Soft glowing gradient for hero heading --- */
+    .glow-text {
+      background: linear-gradient(90deg, #ffd1dc, #ffd700, #ff8fab, #c3f0ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 24px rgba(255, 192, 203, 0.35);
+      animation: hue 10s linear infinite;
+    }
+    @keyframes hue { from { filter: hue-rotate(0deg); } to { filter: hue-rotate(360deg); } }
+
+    /* --- Button with liquid swipe hover --- */
+    .cta {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+    }
+    .cta::before {
+      content: "";
+      position: absolute; 
+      inset: 0; 
+      z-index: -1;
+      background: conic-gradient(from 180deg, #ff8fab, #ffd1dc, #ffb3c6, #ffe5ec, #ff8fab);
+      transform: translateY(100%);
+      transition: transform .5s ease;
+    }
+    .cta:hover::before { 
+      transform: translateY(0); 
+    }
+
+    /* --- Section reveal --- */
+    .reveal { 
+      opacity: 0; 
+      transform: translateY(30px) scale(.98); 
+      transition: .9s cubic-bezier(.2,.7,.2,1); 
+    }
+    .reveal.in { 
+      opacity: 1; 
+      transform: none; 
+    }
+
+    /* --- Simple confetti canvas --- */
+    #confetti { 
+      position: fixed; 
+      inset: 0; 
+      pointer-events: none; 
+      z-index: 30; 
+    }
+
+    /* --- Glass card effect --- */
+    .glass {
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.02));
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,.15);
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Confetti Layer -->
+  <canvas id="confetti"></canvas>
+
+  <!-- HERO -->
+  <header class="relative min-h-[90vh] flex items-center justify-center text-center">
+    <div class="absolute inset-0 -z-0">
+      <!-- Subtle radial glow circles -->
+      <div class="absolute -top-20 -left-20 w-72 h-72 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #ff8fab, transparent 60%);"></div>
+      <div class="absolute -bottom-10 -right-10 w-96 h-96 rounded-full blur-3xl opacity-30" style="background: radial-gradient(circle, #c3f0ff, transparent 60%);"></div>
+    </div>
+
+    <div class="z-10 px-6 max-w-3xl">
+      <h1 class="glow-text font-['Great_Vibes'] text-6xl sm:text-7xl leading-tight">Happy Anniversary</h1>
+      <p class="mt-4 text-base sm:text-lg text-white/80">Two hearts, one story — let’s celebrate the chapters we’ve written and the adventures ahead. 💖</p>
+      <div class="mt-8 flex flex-col sm:flex-row items-center justify-center gap-3">
+        <button id="celebrateBtn" class="cta rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl hover:text-black transition">
+          Celebrate Now ✨
+        </button>
+        <a href="#gallery" class="rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl transition glass">See Memories</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- ABOUT / NOTE -->
+  <section class="reveal relative py-16 sm:py-24">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <div class="grid sm:grid-cols-2 gap-6 items-center">
+        <div class="glass rounded-3xl p-6 sm:p-8">
+          <h2 class="text-3xl font-semibold">For My Forever Person</h2>
+          <p class="mt-4 text-white/80 leading-relaxed">
+            On this day, I’m grateful for your love, your laughter, and your presence by my side. With every sunrise, I find new reasons to fall in love with you. Here’s to us — today, tomorrow, and forever. 🌙
+          </p>
+          <div class="mt-6 flex items-center gap-3">
+            <button id="playSong" class="rounded-xl px-5 py-2 glass">Play Song ▷</button>
+            <span id="songTime" class="text-sm text-white/70">00:00</span>
+          </div>
+          <audio id="audio" preload="metadata" loop>
+           <!-- song -->
+            <source src="TuHaiSong.mp3" type="audio/mpeg" />
+          </audio>
+        </div>
+        <div class="relative">
+          <img class="rounded-3xl shadow-2xl object-cover w-full h-[360px] sm:h-[440px]" src="bear01.gif" alt="photo 1" />
+          <div class="absolute -bottom-5 -left-5 glass bg-[rgba(0,0,0,0.6)] rounded-2xl px-5 py-3 shadow-lg ">💍 <span class="ml-2">Together is our favorite place</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="reveal py-16 sm:py-24">
+    <div class="container mx-auto px-6 max-w-5xl">
+      <h2 class="text-center text-[28px] sm:text-[42px] font-semibold">Our Love Timeline</h2>
+      <div class="mt-10 relative">
+        <div class="absolute left-1/2 -translate-x-1/2 h-full w-1 bg-white/10"></div>
+        <div class="grid gap-10">
+          <!-- Card 1 -->
+          <div class="grid sm:grid-cols-2 gap-6 items-center">
+            <div class="sm:order-1 order-2">
+              <div class="glass rounded-3xl p-6">
+                <h3 class="text-xl font-semibold">The First Hello</h3>
+                <p class="mt-2 text-white/80">A hello that felt like home. Everything changed when our eyes met.</p>
+              </div>
+            </div>
+            <div class="sm:order-2 order-1">
+              <img class="rounded-2xl h-56 w-full object-cover" src="bear03.gif" alt="First date" />
+            </div>
+          </div>
+          <!-- Card 2 -->
+          <div class="grid sm:grid-cols-2 gap-6 items-center">
+            <div>
+              <img class="rounded-2xl h-56 w-full object-cover" src="bear04.gif" alt="Laughs" />
+            </div>
+            <div>
+              <div class="glass rounded-3xl p-6">
+                <h3 class="text-xl font-semibold">Endless Laughs</h3>
+                <p class="mt-2 text-white/80">From silly jokes to midnight talks — every moment with you is magic.</p>
+              </div>
+            </div>
+          </div>
+          <!-- Card 3 -->
+          <div class="grid sm:grid-cols-2 gap-6 items-center">
+            <div class="sm:order-1 order-2">
+              <div class="glass rounded-3xl p-6">
+                <h3 class="text-xl font-semibold">Forever & Always</h3>
+                <p class="mt-2 text-white/80">Here’s to forever — hand in hand, heart to heart. 💞</p>
+              </div>
+            </div>
+            <div class="sm:order-2 order-1">
+              <img class="rounded-2xl h-56 w-full object-cover" src="bear05.gif" alt="Forever" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GALLERY -->
+  <section id="gallery" class="reveal py-16 sm:py-24">
+    <div class="container mx-auto px-6 max-w-6xl">
+      <h2 class="text-center text-3xl sm:text-4xl font-semibold">Memory Lane</h2>
+      <p class="text-center text-white/70 mt-2">Swap these images with your own — the layout adapts automatically.</p>
+
+      <div class="mt-10 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear06.gif" alt="Memory 1" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear01.gif" alt="Memory 2" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear04.gif" alt="Memory 3" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear03.gif" alt="Memory 4" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear04.gif" alt="Memory 5" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear05.gif" alt="Memory 6" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear06.gif" alt="Memory 7" />
+        <img class="rounded-xl  object-cover hover:scale-105 transition" src="bear01.gif" alt="Memory 8" />
+      </div>
+
+      <div class="text-center mt-10">
+        <a href="#message" class="cta inline-block rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl hover:text-black transition">Open Letter 💌</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- LETTER / MESSAGE -->
+  <section id="message" class="reveal py-16 sm:py-24">
+    <div class="container mx-auto px-6 max-w-3xl text-center">
+      <div class="glass rounded-3xl p-8">
+        <h2 class="text-3xl sm:text-4xl font-semibold">An Open Letter To Us</h2>
+        <p class="mt-4 text-white/80 leading-loose">
+          Happy Anniversary, my love. Thank you for choosing me — on our best days and our hard days. Thank you for the patience, the kindness, and the tiny little moments that make up our forever. If love is a journey, I’m so glad I get to travel it with you.
+        </p>
+        <div class="mt-6">
+          <a href="forever.html" class="cta inline-block rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl hover:text-black transition">I have a surprise for you →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="py-10 text-center text-white/60">
+    Made with ❤️ for our special day. <span class="text-white/40">© <span id="year"></span></span>
+  </footer>
+
+  <script>
+    // --- YEAR ---
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // --- INTERSECTION OBSERVER FOR REVEALS ---
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) e.target.classList.add('in');
+      });
+    }, { threshold: 0.2 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+    // --- SIMPLE CONFETTI (rectangles) ---
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    let W, H, confetti = [];
+    const COLORS = ['#ffd1dc','#ff8fab','#ffe5ec','#c3f0ff','#fff'];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    addEventListener('resize', resize); resize();
+
+    function spawnConfetti(n=180){
+      for(let i=0;i<n;i++){
+        confetti.push({
+          x: Math.random()*W,
+          y: -20 - Math.random()*H,
+          w: 6 + Math.random()*6,
+          h: 10 + Math.random()*12,
+          s: 1 + Math.random()*3,
+          a: Math.random()*Math.PI*2,
+          color: COLORS[(Math.random()*COLORS.length)|0]
+        });
+      }
+    }
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      confetti.forEach(p=>{
+        p.y += p.s; p.x += Math.sin(p.a+=0.03);
+        ctx.save();
+        ctx.translate(p.x, p.y); ctx.rotate(p.a*0.5);
+        ctx.fillStyle = p.color; ctx.fillRect(-p.w/2, -p.h/2, p.w, p.h);
+        ctx.restore();
+      });
+      confetti = confetti.filter(p=> p.y < H + 40);
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    document.getElementById('celebrateBtn').addEventListener('click', ()=>{
+      spawnConfetti(240);
+    });
+
+    // --- PETALS ---
+    const PETAL_SVG = `
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="g" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stop-color="#ff8fab"/>
+            <stop offset="100%" stop-color="#ffd1dc"/>
+          </linearGradient>
+        </defs>
+        <path d="M32 6c9 4 18 14 18 24S41 54 32 58 14 50 14 40 23 10 32 6z" fill="url(#g)"/>
+      </svg>`;
+
+    function petal(x){
+      const el = document.createElement('div');
+      el.className = 'petal';
+      el.style.left = x + 'px';
+      el.style.setProperty('--size', (12 + Math.random()*18) + 'px');
+      el.style.setProperty('--x', Math.random() * innerWidth - x + 'px');
+      el.style.setProperty('--drift', (Math.random() * 180 - 90) + 'px');
+      el.style.animation = `fall ${6 + Math.random()*8}s linear infinite`;
+      el.innerHTML = PETAL_SVG;
+      document.body.appendChild(el);
+      setTimeout(()=> el.remove(), 16000);
+    }
+    setInterval(()=> petal(Math.random()*innerWidth), 260);
+
+    // --- AUDIO PLAY/PAUSE + TIME ---
+    const audio = document.getElementById('audio');
+    const playBtn = document.getElementById('playSong');
+    const timeEl = document.getElementById('songTime');
+    let playing = false, tmr;
+
+    function fmt(t){
+      const m = Math.floor(t/60).toString().padStart(2,'0');
+      const s = Math.floor(t%60).toString().padStart(2,'0');
+      return `${m}:${s}`;
+    }
+
+    playBtn.addEventListener('click', async ()=>{
+      if(!playing){
+        try { await audio.play(); playing = true; playBtn.textContent = 'Pause ▌▌'; }
+        catch(e){ console.log(e); }
+      } else {
+        audio.pause(); playing = false; playBtn.textContent = 'Play Song ▷';
+      }
+    });
+
+    audio.addEventListener('timeupdate', ()=>{ timeEl.textContent = fmt(audio.currentTime); });
+    audio.addEventListener('ended', ()=>{ playing = false; playBtn.textContent = 'Play Song ▷'; });
+  </script>
+</body>
+</html>
