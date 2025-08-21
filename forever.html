@@ -138,7 +138,7 @@
         <button id="openGift" class="cta rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl hover:text-black transition">Open Gift 🎁</button>
         <a href="index.html" class="rounded-2xl px-8 py-3 font-semibold tracking-wide shadow-lg ring-1 ring-white/20 hover:shadow-2xl transition glass">Back Home</a>
       </div>
-      <div class="mt-6 flex items-center gap-3">
+      <div class="mt-6 ml-[150px] flex items-center gap-3">
         <button id="playSong" class="rounded-xl px-5 py-2 glass">Play Song ▷</button>
         <span id="songTime" class="text-sm text-white/70">00:00</span>
       </div>
@@ -240,9 +240,9 @@
 
     // Modal gallery data
     const pics = [
-      {src:'https://images.unsplash.com/photo-1520975916090-3105956dac38?q=80&w=1600&auto=format&fit=crop', cap:'Sunsets and shared whispers'},
-      {src:'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=1600&auto=format&fit=crop', cap:'First dates, forever butterflies'},
-      {src:'https://images.unsplash.com/photo-1519741497674-611481863552?q=80&w=1600&auto=format&fit=crop', cap:'Dreaming up our future'}
+      {src:'bear04.gif', cap:'Sunsets and shared whispers'},
+      {src:'bear03.gif', cap:'First dates, forever butterflies'},
+      {src:'bear01.gif', cap:'Dreaming up our future'}
     ];
     let idx = 0;
     const modal = document.getElementById('giftModal');
@@ -292,8 +292,11 @@
     playBtn.addEventListener('click', async ()=>{
       if(!playing){ 
         try{ 
-          await audio.play(); playing = true; playBtn.textContent = 'Pause ▌▌'; 
-        } catch(e){ console.log(e); 
+          await audio.play(); 
+          playing = true; 
+          playBtn.textContent = 'Pause ▌▌'; 
+        } catch(e){ 
+          console.log(e); 
           } 
       }
       else { 
@@ -303,7 +306,10 @@
       }
     });
     audio.addEventListener('timeupdate', ()=> timeEl.textContent = fmt(audio.currentTime));
-    audio.addEventListener('ended', ()=>{ playing=false; playBtn.textContent='Play Song ▷'; });
+    audio.addEventListener('ended', ()=>{ 
+      playing=false; 
+      playBtn.textContent='Play Song ▷'; 
+    });
   </script>
 </body>
 </html>
